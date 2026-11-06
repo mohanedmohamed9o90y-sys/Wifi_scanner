@@ -1,0 +1,29 @@
+name: Build WiFi Scanner APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get project
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            python3-pip \
+            python3-setuptools \
+            git \
+            zip \
+            unzip \
+            openjdk-17-jdk
+
+      - name: Build APK
+        run: |
+          pip install buildozer cython
+          buildozer android debug
+          
